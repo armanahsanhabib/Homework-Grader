@@ -4,7 +4,6 @@ import { MdOutlineDocumentScanner } from "react-icons/md";
 import Header from "../components/common/Header";
 
 const GradeSubmission = () => {
-  const [productImage, setProductImage] = useState(null);
   const [formData, setFormData] = useState({
     roll: "",
     name: "",
@@ -14,33 +13,6 @@ const GradeSubmission = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    // props.setFormData({ ...props.formData, product_image: file });
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setProductImage(reader.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleImageRemove = () => {
-    // Clear the file input field
-    const fileInput = document.getElementById("product_image");
-    fileInput.value = null;
-
-    // Clear the image state
-    setProductImage(null);
-
-    // Clear the product image from productDetails
-    // setFormData({ ...props.formData, product_image: null });
   };
 
   const handleSubmit = async (e) => {
