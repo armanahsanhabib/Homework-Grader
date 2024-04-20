@@ -1,14 +1,22 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { BiSolidErrorAlt } from "react-icons/bi";
-import { MdOutlineDocumentScanner } from "react-icons/md";
+import { BsCalculator } from "react-icons/bs";
+import MarksSubmissionTable from "../components/GradeSubmission.jsx/MarksSubmissionTable";
 import Header from "../components/common/Header";
 
-const GradeSubmission = () => {
+const GradeSubmission = (props) => {
   const [formData, setFormData] = useState({
     roll: "",
     name: "",
   });
-  const [marks, setMarks] = useState("");
+  const [marks, setMarks] = useState({
+    math: "",
+    science: "",
+    english: "",
+    history: "",
+    geography: "",
+  });
   const [grade, setGrade] = useState("");
 
   const handleChange = (e) => {
@@ -29,15 +37,19 @@ const GradeSubmission = () => {
   };
 
   return (
-    <div className="w-[calc(100%-300px)] overflow-hidden p-3">
-      <Header title="Grade Submission" />
+    <div className="overflow-hidden p-3 xl:w-[calc(100%-300px)]">
+      <Header
+        title="Grade Submission"
+        showSidebar={props.showSidebar}
+        setShowSidebar={props.setShowSidebar}
+      />
       <main className="grid h-[calc(100%-61px)] grid-cols-3 gap-5 overflow-auto">
         <div className="left col-span-2 p-3">
           <form onSubmit={handleSubmit}>
             <h3 className="mb-3 text-lg font-bold text-[#6151fb]">
               Student information
             </h3>
-            <div className="studnets_info grid grid-cols-4 gap-5">
+            <div className="studnets_info grid grid-cols-3 gap-5">
               <div className="">
                 <label
                   htmlFor="roll"
@@ -51,8 +63,8 @@ const GradeSubmission = () => {
                   name="roll"
                   onChange={handleChange}
                   value={formData.roll}
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="123001"
+                  className="block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500"
+                  placeholder="Enter roll..."
                   required
                 />
               </div>
@@ -69,8 +81,8 @@ const GradeSubmission = () => {
                   name="name"
                   onChange={handleChange}
                   value={formData.name}
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="John Doe"
+                  className="block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500"
+                  placeholder="Enter name..."
                   required
                 />
               </div>
@@ -78,53 +90,30 @@ const GradeSubmission = () => {
             <h3 className="my-3 text-lg font-bold text-[#6151fb]">
               Submit Grades
             </h3>
-            <div className="subjects grid grid-cols-3">
-              <div className="col-span-2">
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-900"
-                >
-                  Students Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  onChange={handleChange}
-                  value="Mathmatics"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="John Doe"
-                  required
-                  readOnly
-                />
-              </div>
-            </div>
+            <MarksSubmissionTable marks={marks} setMarks={setMarks} />
             <button
               type="submit"
               value="Analyze Homework"
               className="mt-8 flex cursor-pointer items-center justify-center gap-2 rounded bg-[#c64bf8] px-5 py-2 font-semibold text-white transition-all hover:bg-[#b132e4]"
             >
-              <MdOutlineDocumentScanner className="text-2xl" />{" "}
-              <span>Analyze Homework</span>{" "}
+              <BsCalculator className="text-xl" /> <span>Calculate Grade</span>{" "}
             </button>
           </form>
         </div>
         <div className="right col-span-1 border-l bg-white p-3">
           <h2 className="my-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
-            Homework Analysis Result
+            Grade Analysis
           </h2>
           {!grade ? (
-            <div className="flex h-[calc(100%-50px)] w-full items-center justify-center">
+            <div className="mt-8 flex w-full justify-center">
               <div className="item flex flex-col items-center gap-3 rounded-lg bg-[#f9e5ea] p-8">
                 <div className="icon">
                   <BiSolidErrorAlt className="text-5xl text-[#ef2b58]" />
                 </div>
                 <div className="text flex flex-col gap-2 text-center">
-                  <h3 className="text-xl font-bold">
-                    No Analysis Data to Show
-                  </h3>
+                  <h3 className="text-xl font-bold">Grades not available!</h3>
                   <p className="text-gray-600">
-                    Analysis result will show once submitted homework!
+                    Grades will show once grade calculated!
                   </p>
                 </div>
               </div>

@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
-import { BiSolidSpreadsheet } from "react-icons/bi";
+import { BiSpreadsheet } from "react-icons/bi";
+import { CgCloseO } from "react-icons/cg";
+import { GiNotebook } from "react-icons/gi";
 import { MdOutlineStarRate } from "react-icons/md";
-import { PiNotePencilDuotone } from "react-icons/pi";
-import { VscNotebook } from "react-icons/vsc";
+import { PiNotePencilDuotone, PiNotebookFill } from "react-icons/pi";
 import { useLocation } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const location = useLocation();
 
   const NavItem = (props) => {
     return (
-      <li>
+      <li className="border-b">
         <a
           className={`flex w-full items-center gap-2 px-4 py-3 transition-all hover:bg-[#c64bf8] hover:font-semibold hover:text-white ${
             location.pathname === props.href
@@ -27,15 +28,20 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex w-[300px] flex-col justify-between py-5 shadow-xl">
-      <div className="top flex flex-col gap-8">
-        <div className="logo mt-5 flex items-center justify-center gap-2 text-xl">
-          <VscNotebook className="text-2xl" />
-          <span className="font-[600]">Homework</span>
-          <span className="font-[800] text-[#6151fb]">Grader</span>
+    <div
+      className={`w-[300px] flex-col justify-between bg-white shadow-xl xl:flex ${props.showSidebar ? "fixed z-50 h-full shadow-2xl xl:static" : "hidden"}`}
+    >
+      <div className="top flex flex-col">
+        <div className="logo flex flex-col items-center justify-center gap-2 bg-indigo-100 py-8 text-xl">
+          <GiNotebook className="text-5xl text-slate-600" />
+          <div className="">
+            <span className="font-[600]">Homework</span>{" "}
+            <span className="font-[800] text-[#6151fb]">Grader</span>
+          </div>
         </div>
+        <hr className="border-4 border-gray-300" />
         <nav>
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col">
             <NavItem
               title="Homework Submission"
               href="/"
@@ -47,14 +53,24 @@ const Sidebar = () => {
               icon={<MdOutlineStarRate />}
             />
             <NavItem
-              title="Result Sheet"
-              href="/result-sheet"
-              icon={<BiSolidSpreadsheet />}
+              title="Homework Analysis Sheet"
+              href="/homework-sheet"
+              icon={<BiSpreadsheet />}
+            />
+            <NavItem
+              title="Grade Submission Sheet"
+              href="/grade-sheet"
+              icon={<PiNotebookFill />}
             />
           </ul>
         </nav>
       </div>
-      <div className="bottom"></div>
+      <div className="close absolute right-0 top-0 block p-5 xl:hidden">
+        <CgCloseO
+          className="text-4xl text-rose-600"
+          onClick={() => props.setShowSidebar(!props.showSidebar)}
+        />
+      </div>
     </div>
   );
 };

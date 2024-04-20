@@ -1,10 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { BiSolidErrorAlt } from "react-icons/bi";
-import { MdOutlineDocumentScanner } from "react-icons/md";
+import { IoCloudUpload } from "react-icons/io5";
+import { MdDelete, MdOutlineDocumentScanner } from "react-icons/md";
+import { toast } from "react-toastify";
 import Header from "../components/common/Header";
 
-const HomeworkSubmission = () => {
-  const [productImage, setProductImage] = useState(null);
+const HomeworkSubmission = (props) => {
+  const [homeworkFile, setHomeworkFile] = useState(null);
   const [formData, setFormData] = useState({
     roll: "",
     name: "",
@@ -18,31 +21,19 @@ const HomeworkSubmission = () => {
     setShowAnalysis(false);
   };
 
-  const handleImageChange = (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
-    // props.setFormData({ ...props.formData, product_image: file });
 
     if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setProductImage(reader.result);
-      };
-
-      reader.readAsDataURL(file);
+      setHomeworkFile(file);
     }
   };
 
-  const handleImageRemove = () => {
-    // Clear the file input field
-    const fileInput = document.getElementById("product_image");
+  const handleFileRemove = () => {
+    const fileInput = document.getElementById("homework_file");
     fileInput.value = null;
 
-    // Clear the image state
-    setProductImage(null);
-
-    // Clear the product image from productDetails
-    // setFormData({ ...props.formData, product_image: null });
+    setHomeworkFile(null);
   };
 
   const handleSubmit = async (e) => {
@@ -63,16 +54,43 @@ const HomeworkSubmission = () => {
     }
   }, [marks]);
 
+  const handleSaveResult = () => {
+    const newResult = {
+      name: formData.name,
+      roll: formData.roll,
+      marks: marks,
+      grade: grade,
+    };
+
+    const existingResultSheet =
+      JSON.parse(localStorage.getItem("resultSheet")) || [];
+
+    const updatedResultSheet = [...existingResultSheet, newResult];
+
+    props.setResultSheet(updatedResultSheet);
+
+    localStorage.setItem("resultSheet", JSON.stringify(updatedResultSheet));
+
+    toast.success("Result Saved Successfully!", {
+      position: "bottom-center",
+      autoClose: 3000,
+    });
+  };
+
   return (
-    <div className="w-[calc(100%-300px)] overflow-hidden p-3">
-      <Header title="Homework Submission" />
-      <main className="grid h-[calc(100%-61px)] grid-cols-3 gap-5 overflow-auto">
-        <div className="left col-span-2 p-3">
+    <div className="w-full overflow-hidden p-3 xl:w-[calc(100%-300px)]">
+      <Header
+        title="Homework Submission"
+        showSidebar={props.showSidebar}
+        setShowSidebar={props.setShowSidebar}
+      />
+      <main className="grid h-[calc(100%-61px)] gap-5 overflow-auto sm:grid-cols-3">
+        <div className="left h-full p-3 sm:col-span-2 sm:overflow-auto">
           <form onSubmit={handleSubmit}>
             <h3 className="mb-3 text-lg font-bold text-[#6151fb]">
               Student information
             </h3>
-            <div className="studnets_info grid grid-cols-4 gap-5">
+            <div className="studnets_info grid grid-cols-3 gap-5">
               <div className="">
                 <label
                   htmlFor="roll"
@@ -86,7 +104,7 @@ const HomeworkSubmission = () => {
                   name="roll"
                   onChange={handleChange}
                   value={formData.roll}
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500"
                   placeholder="Enter roll..."
                   required
                 />
@@ -104,7 +122,7 @@ const HomeworkSubmission = () => {
                   name="name"
                   onChange={handleChange}
                   value={formData.name}
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500"
                   placeholder="Enter name..."
                   required
                 />
@@ -113,56 +131,71 @@ const HomeworkSubmission = () => {
             <h3 className="my-3 text-lg font-bold text-[#6151fb]">
               Submit Homework
             </h3>
-            <div className="product_image">
+            <div className="homework_file">
               <label
-                htmlFor="product_image"
-                className="mb-2 block h-[400px] w-[400px] cursor-pointer"
+                htmlFor="homework_file"
+                className="mb-2 block h-full w-full cursor-pointer overflow-auto"
               >
-                {productImage ? (
-                  <img
-                    src={productImage}
-                    alt="Product"
-                    className="h-full w-full rounded-lg border bg-white object-contain"
-                  />
+                {homeworkFile ? (
+                  homeworkFile.type.startsWith("image/") ? (
+                    <img
+                      src={URL.createObjectURL(homeworkFile)}
+                      alt="Homework"
+                      className="h-[600px] w-full bg-gray-300 object-contain"
+                    />
+                  ) : (
+                    <iframe
+                      title="Homework PDF"
+                      src={URL.createObjectURL(homeworkFile)}
+                      className="h-[600px] w-full border-none"
+                    />
+                  )
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center rounded-lg border-2 border-dashed bg-gray-100 object-cover">
-                    <div className="rounded border border-blue-500 px-5 py-2 text-blue-600">
-                      Click to Submit Homework
+                  <div className="flex h-[400px] w-full items-center justify-center rounded-lg border-2 border-dashed bg-gray-100 object-cover">
+                    <div className="flex flex-col items-center justify-center text-gray-800">
+                      <IoCloudUpload className="text-6xl text-gray-400" />
+                      <h3 className="text-lg font-semibold">
+                        Submit Your Homework (PDF or Image)
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        Only .pdf, .jpg, .jpeg, .png files are allowed!
+                      </p>
                     </div>
                   </div>
                 )}
               </label>
               <input
                 type="file"
-                name="product_image"
-                id="product_image"
-                accept="image/*"
-                onChange={handleImageChange}
+                name="homework_file"
+                id="homework_file"
+                accept=".pdf, .jpg, .jpeg, .png"
+                className="hidden"
+                onChange={handleFileChange}
                 required
               />
             </div>
-            {productImage && (
+            {homeworkFile && (
               <div className="">
                 <button
                   type="button"
-                  className="mt-5 cursor-pointer rounded bg-rose-500 px-5 py-2 text-sm text-white hover:bg-rose-600"
-                  onClick={() => handleImageRemove()}
+                  className="mx-auto mt-5 flex cursor-pointer items-center gap-2 rounded bg-rose-500 px-5 py-2 text-sm text-white hover:bg-rose-600"
+                  onClick={() => handleFileRemove()}
                 >
-                  X Remove Image
+                  <MdDelete className="text-xl" /> Remove File
                 </button>
               </div>
             )}
             <button
               type="submit"
               value="Analyze Homework"
-              className="mt-8 flex cursor-pointer items-center justify-center gap-2 rounded bg-[#c64bf8] px-5 py-2 font-semibold text-white transition-all hover:bg-[#b132e4]"
+              className="mx-auto mb-8 mt-5 flex cursor-pointer items-center justify-center gap-2 rounded bg-[#c64bf8] px-5 py-2 font-semibold text-white transition-all hover:bg-[#b132e4]"
             >
               <MdOutlineDocumentScanner className="text-2xl" />{" "}
               <span>Analyze Homework</span>{" "}
             </button>
           </form>
         </div>
-        <div className="right col-span-1 border-l bg-white p-3">
+        <div className="right col-span-1 bg-white p-3 sm:border-l">
           <h2 className="my-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
             Homework Analysis Result
           </h2>
@@ -171,16 +204,16 @@ const HomeworkSubmission = () => {
           !marks ||
           !formData.name ||
           !formData.roll ? (
-            <div className="flex h-[calc(100%-50px)] w-full items-center justify-center">
-              <div className="item flex flex-col items-center gap-3 rounded-lg bg-[#f9e5ea] p-8">
+            <div className="flex w-full justify-center xl:mt-8">
+              <div className="item flex h-max flex-col items-center gap-3 rounded-lg bg-[#f9e5ea] p-8">
                 <div className="icon">
                   <BiSolidErrorAlt className="text-5xl text-[#ef2b58]" />
                 </div>
                 <div className="text flex flex-col gap-2 text-center">
-                  <h3 className="text-xl font-bold">
+                  <h3 className="font-bold xl:text-xl">
                     No Analysis Data to Show
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-sm text-gray-600 xl:text-base">
                     Analysis result will show once submitted homework!
                   </p>
                 </div>
@@ -224,6 +257,13 @@ const HomeworkSubmission = () => {
                 </tr>
               </table>
               <p className="text-sm text-gray-600">* Representational Only!</p>
+              <button
+                type="button"
+                className="mx-auto mt-3 w-max cursor-pointer rounded-lg bg-emerald-500 px-8 py-3 font-semibold text-white hover:bg-emerald-600"
+                onClick={handleSaveResult}
+              >
+                Save the Result
+              </button>
             </div>
           )}
         </div>
