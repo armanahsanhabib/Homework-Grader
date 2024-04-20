@@ -1,11 +1,21 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { BiSolidError } from "react-icons/bi";
 import { toast } from "react-toastify";
 import Header from "../components/common/Header";
 
 const HomeworkResultSheet = (props) => {
+  const [resultSheet, setResultSheet] = useState(
+    JSON.parse(localStorage.getItem("resultSheet")) || [],
+  );
+
+  useEffect(() => {
+    localStorage.setItem("resultSheet", JSON.stringify(resultSheet));
+  }, [resultSheet]);
+
   const handleDeleteAllRecords = () => {
     localStorage.clear();
+    setResultSheet([]);
     toast.success("All Records Deleted Successfully!", {
       position: "bottom-center",
       autoClose: 3000,
@@ -19,7 +29,7 @@ const HomeworkResultSheet = (props) => {
         showSidebar={props.showSidebar}
         setShowSidebar={props.setShowSidebar}
       />
-      {props.resultSheet.length > 0 ? (
+      {resultSheet.length > 0 ? (
         <main className="h-[calc(100%-61px)] overflow-auto">
           <table className="container mx-auto mt-5 divide-y divide-gray-200 border border-gray-200">
             <thead className="bg-gray-50">
@@ -57,7 +67,7 @@ const HomeworkResultSheet = (props) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {props.resultSheet?.map((result, index) => (
+              {resultSheet?.map((result, index) => (
                 <tr key={index}>
                   <td className="whitespace-nowrap border border-gray-200 px-6 py-4">
                     {index + 1}
