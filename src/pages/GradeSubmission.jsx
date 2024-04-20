@@ -43,8 +43,8 @@ const GradeSubmission = (props) => {
         showSidebar={props.showSidebar}
         setShowSidebar={props.setShowSidebar}
       />
-      <main className="grid h-[calc(100%-61px)] grid-cols-3 gap-5 overflow-auto">
-        <div className="left col-span-2 p-3">
+      <main className="grid h-[calc(100%-61px)] gap-5 overflow-auto sm:grid-cols-3">
+        <div className="left h-full p-3 sm:col-span-2">
           <form onSubmit={handleSubmit}>
             <h3 className="mb-3 text-lg font-bold text-[#6151fb]">
               Student information
@@ -100,7 +100,7 @@ const GradeSubmission = (props) => {
             </button>
           </form>
         </div>
-        <div className="right col-span-1 border-l bg-white p-3">
+        <div className="right col-span-1 bg-white p-3 sm:border-l">
           <h2 className="my-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
             Grade Analysis
           </h2>
