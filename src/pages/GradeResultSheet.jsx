@@ -4,17 +4,17 @@ import { BiSolidError } from "react-icons/bi";
 import { toast } from "react-toastify";
 import Header from "../components/common/Header";
 
-const HomeworkResultSheet = (props) => {
+const GradeResultSheet = (props) => {
   const [resultSheet, setResultSheet] = useState(
-    JSON.parse(localStorage.getItem("resultSheet")) || [],
+    JSON.parse(localStorage.getItem("gradeSheet")) || [],
   );
 
   useEffect(() => {
-    localStorage.setItem("resultSheet", JSON.stringify(resultSheet));
+    localStorage.setItem("gradeSheet", JSON.stringify(resultSheet));
   }, [resultSheet]);
 
   const handleDeleteAllRecords = () => {
-    localStorage.removeItem("resultSheet");
+    localStorage.removeItem("gradeSheet");
     setResultSheet([]);
     toast.success("All Records Deleted Successfully!", {
       position: "bottom-center",
@@ -25,7 +25,7 @@ const HomeworkResultSheet = (props) => {
   return (
     <div className="w-full overflow-hidden p-3 xl:w-[calc(100%-300px)]">
       <Header
-        title="Homework Analysis Sheet"
+        title="Grade Submission Sheet"
         showSidebar={props.showSidebar}
         setShowSidebar={props.setShowSidebar}
       />
@@ -48,27 +48,45 @@ const HomeworkResultSheet = (props) => {
                 </th>
                 <th
                   scope="col"
-                  className="border border-gray-200 px-6 py-3 text-center text-sm font-medium uppercase tracking-wider text-gray-500"
+                  className="w-[300px] border border-gray-200 px-6 py-3 text-center text-sm font-medium uppercase tracking-wider text-gray-500"
                 >
-                  Students Name
+                  Name
                 </th>
                 <th
                   scope="col"
                   className="border border-gray-200 px-6 py-3 text-center text-sm font-medium uppercase tracking-wider text-gray-500"
                 >
-                  Right Answers
+                  Math
                 </th>
                 <th
                   scope="col"
                   className="border border-gray-200 px-6 py-3 text-center text-sm font-medium uppercase tracking-wider text-gray-500"
                 >
-                  Wrong Answers
+                  Science
                 </th>
                 <th
                   scope="col"
                   className="border border-gray-200 px-6 py-3 text-center text-sm font-medium uppercase tracking-wider text-gray-500"
                 >
-                  Obtained Marks
+                  English
+                </th>
+                <th
+                  scope="col"
+                  className="border border-gray-200 px-6 py-3 text-center text-sm font-medium uppercase tracking-wider text-gray-500"
+                >
+                  History
+                </th>
+                <th
+                  scope="col"
+                  className="border border-gray-200 px-6 py-3 text-center text-sm font-medium uppercase tracking-wider text-gray-500"
+                >
+                  Geography
+                </th>
+                <th
+                  scope="col"
+                  className="border border-gray-200 px-6 py-3 text-center text-sm font-medium uppercase tracking-wider text-gray-500"
+                >
+                  CGPA
                 </th>
                 <th
                   scope="col"
@@ -91,13 +109,22 @@ const HomeworkResultSheet = (props) => {
                     {result.name}
                   </td>
                   <td className="whitespace-nowrap border border-gray-200 px-6 py-4 text-center">
-                    {result.rightAnswers}
+                    {result.math}
                   </td>
                   <td className="whitespace-nowrap border border-gray-200 px-6 py-4 text-center">
-                    {result.wrongAnswers}
+                    {result.science}
                   </td>
                   <td className="whitespace-nowrap border border-gray-200 px-6 py-4 text-center">
-                    {result.marks}
+                    {result.english}
+                  </td>
+                  <td className="whitespace-nowrap border border-gray-200 px-6 py-4 text-center">
+                    {result.history}
+                  </td>
+                  <td className="whitespace-nowrap border border-gray-200 px-6 py-4 text-center">
+                    {result.geography}
+                  </td>
+                  <td className="whitespace-nowrap border border-gray-200 px-6 py-4 text-center">
+                    {result.cgpa}
                   </td>
                   <td className="whitespace-nowrap border border-gray-200 px-6 py-4 text-center">
                     {result.grade}
@@ -134,4 +161,4 @@ const HomeworkResultSheet = (props) => {
   );
 };
 
-export default HomeworkResultSheet;
+export default GradeResultSheet;

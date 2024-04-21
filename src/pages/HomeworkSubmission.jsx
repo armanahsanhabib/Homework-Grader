@@ -5,6 +5,7 @@ import { IoCloudUpload } from "react-icons/io5";
 import { MdDelete, MdOutlineDocumentScanner } from "react-icons/md";
 import { toast } from "react-toastify";
 import Header from "../components/common/Header";
+import { calculateMarks } from "../utils/homewrokFunctions";
 
 const HomeworkSubmission = (props) => {
   const [homeworkFile, setHomeworkFile] = useState(null);
@@ -15,6 +16,8 @@ const HomeworkSubmission = (props) => {
   const [marks, setMarks] = useState("");
   const [grade, setGrade] = useState("");
   const [showAnalysis, setShowAnalysis] = useState(false);
+  const [rightAnswers, setRightAnswers] = useState(0);
+  const [wrongAnswers, setWrongAnswers] = useState(0);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,15 +42,29 @@ const HomeworkSubmission = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newMarks = Math.floor(Math.random() * 10) + 1;
+    // Simulating right and wrong answers for now
+    const simulatedRightAnswers = Math.floor(Math.random() * 10) + 1;
+    const simulatedWrongAnswers = 10 - simulatedRightAnswers;
+
+    // Calculate marks using the provided function
+    const newMarks = calculateMarks(
+      simulatedRightAnswers,
+      simulatedWrongAnswers,
+    );
     await setMarks(newMarks);
+    setRightAnswers(simulatedRightAnswers);
+    setWrongAnswers(simulatedWrongAnswers);
     setShowAnalysis(true);
   };
 
   useEffect(() => {
-    if (marks <= 5) {
+    const percentageMarks = (marks / 100) * 100;
+
+    if (percentageMarks <= 40) {
       setGrade("Poor");
-    } else if (marks <= 7) {
+    } else if (percentageMarks <= 60) {
+      setGrade("Below Average");
+    } else if (percentageMarks <= 80) {
       setGrade("Good");
     } else {
       setGrade("Excellent");
@@ -60,15 +77,15 @@ const HomeworkSubmission = (props) => {
       roll: formData.roll,
       marks: marks,
       grade: grade,
+      rightAnswers: rightAnswers,
+      wrongAnswers: wrongAnswers,
     };
 
     const existingResultSheet =
       JSON.parse(localStorage.getItem("resultSheet")) || [];
-
     const updatedResultSheet = [...existingResultSheet, newResult];
 
     props.setResultSheet(updatedResultSheet);
-
     localStorage.setItem("resultSheet", JSON.stringify(updatedResultSheet));
 
     toast.success("Result Saved Successfully!", {
@@ -195,15 +212,11 @@ const HomeworkSubmission = (props) => {
             </button>
           </form>
         </div>
-        <div className="right col-span-1 bg-white p-3 sm:border-l">
+        <div className="right col-span-1 p-3 sm:border-l">
           <h2 className="my-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
             Homework Analysis Result
           </h2>
-          {!showAnalysis ||
-          !grade ||
-          !marks ||
-          !formData.name ||
-          !formData.roll ? (
+          {!showAnalysis || !grade || !formData.name || !formData.roll ? (
             <div className="flex w-full justify-center xl:mt-8">
               <div className="item flex h-max flex-col items-center gap-3 rounded-lg bg-[#f9e5ea] p-8">
                 <div className="icon">
@@ -221,38 +234,80 @@ const HomeworkSubmission = (props) => {
             </div>
           ) : (
             <div className="flex flex-col gap-2">
+              <h3 className="font-semibold text-rose-600">Student details:</h3>
               <table className="border-collapse border border-gray-300">
-                <tr>
-                  <th className="w-[200px] border border-gray-300 p-2 text-start">
-                    Student Name:
-                  </th>
-                  <td className="border border-gray-300 p-2">
-                    {formData.name}
-                  </td>
-                </tr>
                 <tr>
                   <th className="w-[200px] border border-gray-300 p-2 text-start">
                     Student Roll:
                   </th>
-                  <td className="border border-gray-300 p-2">
+                  <td colSpan={2} className="border border-gray-300 p-2">
                     {formData.roll}
                   </td>
                 </tr>
                 <tr>
                   <th className="w-[200px] border border-gray-300 p-2 text-start">
+                    Student Name:
+                  </th>
+                  <td colSpan={2} className="border border-gray-300 p-2">
+                    {formData.name}
+                  </td>
+                </tr>
+              </table>
+              <h3 className="mt-3 font-semibold text-rose-600">Marks Sheet:</h3>
+              <table>
+                <tr>
+                  <th className="w-[200px] border border-gray-300 p-2 text-center">
+                    {""}
+                  </th>
+                  <th className="border border-gray-300 p-2 text-center">
+                    No of Ques
+                  </th>
+                  <th className="border border-gray-300 p-2 text-center">
+                    Marks
+                  </th>
+                </tr>
+                <tr>
+                  <th className="w-[200px] border border-gray-300 p-2 text-start">
+                    Total Right Answers:
+                  </th>
+                  <td className="border border-gray-300 p-2 text-center">
+                    {rightAnswers}
+                  </td>
+                  <td className="border border-gray-300 p-2 text-center">
+                    {rightAnswers * 10}
+                  </td>
+                </tr>
+                <tr>
+                  <th className="w-[200px] border border-gray-300 p-2 text-start">
+                    Total Wrong Answers:
+                  </th>
+                  <td className="border border-gray-300 p-2 text-center">
+                    {wrongAnswers}
+                  </td>
+                  <td className="border border-gray-300 p-2 text-center">
+                    {wrongAnswers * -5}
+                  </td>
+                </tr>
+              </table>
+              <h3 className="mt-3 font-semibold text-rose-600">
+                Final Marks and Remarks:
+              </h3>
+              <table>
+                <tr>
+                  <th className="w-[200px] border border-gray-300 p-2 text-start">
                     Obtained Marks:
                   </th>
-                  <td className="border border-gray-300 p-2">
+                  <td colSpan={2} className="border border-gray-300 p-2">
                     <span className="font-bold text-[#6151fb]">{marks}</span>{" "}
-                    out of <span>10</span>
+                    out of <span>100</span>
                   </td>
                 </tr>
                 <tr>
                   <th className="w-[200px] border border-gray-300 p-2 text-start">
                     Result Analysis:
                   </th>
-                  <td className="border border-gray-300 p-2">
-                    {grade} Performance
+                  <td colSpan={2} className="border border-gray-300 p-2">
+                    {grade}
                   </td>
                 </tr>
               </table>
