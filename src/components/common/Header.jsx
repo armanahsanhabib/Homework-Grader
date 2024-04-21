@@ -3,7 +3,7 @@ import { FaBars } from "react-icons/fa6";
 
 const Header = (props) => {
   return (
-    <header className="mb-2 flex items-center justify-between border-b p-3">
+    <header className="flex items-center justify-between border-b bg-[#dae3f2] px-6 py-5 shadow">
       <div className="left flex items-center gap-5">
         <FaBars
           className="mt-1 text-2xl xl:hidden"

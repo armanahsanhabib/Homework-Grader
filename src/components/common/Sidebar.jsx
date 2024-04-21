@@ -11,12 +11,12 @@ const Sidebar = (props) => {
 
   const NavItem = (props) => {
     return (
-      <li className="border-b">
+      <li className="mx-5 overflow-hidden rounded-lg border shadow-lg">
         <a
-          className={`flex w-full items-center gap-2 px-4 py-3 transition-all hover:bg-[#c64bf8] hover:font-semibold hover:text-white ${
+          className={`flex w-full items-center gap-2 px-4 py-3 text-white transition-all hover:border-orange-500 hover:bg-orange-500 hover:font-semibold hover:text-white ${
             location.pathname === props.href
-              ? "bg-[#c64bf8] font-semibold text-white"
-              : ""
+              ? "border-orange-500 bg-orange-400 font-semibold"
+              : "bg-[#1e1d3d]"
           }`}
           href={props.href}
         >
@@ -29,19 +29,18 @@ const Sidebar = (props) => {
 
   return (
     <div
-      className={`w-[300px] flex-col justify-between bg-white shadow-xl xl:flex ${props.showSidebar ? "fixed z-50 h-full shadow-2xl xl:static" : "hidden"}`}
+      className={`w-[320px] flex-col justify-between bg-[#2b2a52] shadow-xl xl:flex ${props.showSidebar ? "fixed z-50 h-full shadow-2xl xl:static" : "hidden"}`}
     >
-      <div className="top flex flex-col">
-        <div className="logo flex flex-col items-center justify-center gap-2 bg-indigo-100 py-8 text-xl">
-          <GiNotebook className="text-5xl text-slate-600" />
+      <div className="top flex flex-col gap-5">
+        <div className="logo flex flex-col items-center justify-center gap-2 bg-[#1e1d3d] py-8 text-xl text-white">
+          <GiNotebook className="text-4xl" />
           <div className="">
             <span className="font-[600]">Homework</span>{" "}
-            <span className="font-[800] text-[#6151fb]">Grader</span>
+            <span className="font-[800] text-yellow-400">Grader</span>
           </div>
         </div>
-        <hr className="border-4 border-gray-300" />
         <nav>
-          <ul className="flex flex-col">
+          <ul className="flex flex-col gap-5">
             <NavItem
               title="Homework Submission"
               href="/"

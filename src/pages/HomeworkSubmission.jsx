@@ -95,14 +95,14 @@ const HomeworkSubmission = (props) => {
   };
 
   return (
-    <div className="w-full overflow-hidden p-3 xl:w-[calc(100%-300px)]">
+    <div className="w-full overflow-hidden xl:w-[calc(100%-320px)]">
       <Header
         title="Homework Submission"
         showSidebar={props.showSidebar}
         setShowSidebar={props.setShowSidebar}
       />
-      <main className="grid h-[calc(100%-61px)] gap-5 overflow-auto sm:grid-cols-3">
-        <div className="left h-full p-3 sm:col-span-2 sm:overflow-auto">
+      <main className="grid h-[calc(100%-73px)] overflow-auto lg:grid-cols-3">
+        <div className="left m-6 h-max rounded-lg border bg-white p-6 sm:overflow-auto lg:col-span-2">
           <form onSubmit={handleSubmit}>
             <h3 className="mb-3 text-lg font-bold text-[#6151fb]">
               Student information
@@ -158,13 +158,13 @@ const HomeworkSubmission = (props) => {
                     <img
                       src={URL.createObjectURL(homeworkFile)}
                       alt="Homework"
-                      className="h-[600px] w-full bg-gray-300 object-contain"
+                      className="h-[500px] w-full bg-gray-300 object-contain"
                     />
                   ) : (
                     <iframe
                       title="Homework PDF"
                       src={URL.createObjectURL(homeworkFile)}
-                      className="h-[600px] w-full border-none"
+                      className="h-[500px] w-full border-none"
                     />
                   )
                 ) : (
@@ -205,19 +205,19 @@ const HomeworkSubmission = (props) => {
             <button
               type="submit"
               value="Analyze Homework"
-              className="mx-auto mb-8 mt-5 flex cursor-pointer items-center justify-center gap-2 rounded bg-[#c64bf8] px-5 py-2 font-semibold text-white transition-all hover:bg-[#b132e4]"
+              className="mx-auto mt-5 flex cursor-pointer items-center justify-center gap-2 rounded bg-[#c64bf8] px-5 py-2 font-semibold text-white transition-all hover:bg-[#b132e4]"
             >
               <MdOutlineDocumentScanner className="text-2xl" />{" "}
               <span>Analyze Homework</span>{" "}
             </button>
           </form>
         </div>
-        <div className="right col-span-1 p-3 sm:border-l">
-          <h2 className="my-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
+        <div className="right col-span-1 m-6 h-max rounded-lg border bg-white p-6 sm:border-l lg:ms-0">
+          <h2 className="mb-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
             Homework Analysis Result
           </h2>
           {!showAnalysis || !grade || !formData.name || !formData.roll ? (
-            <div className="flex w-full justify-center xl:mt-8">
+            <div className="flex w-full justify-center xl:my-8">
               <div className="item flex h-max flex-col items-center gap-3 rounded-lg bg-[#f9e5ea] p-8">
                 <div className="icon">
                   <BiSolidErrorAlt className="text-5xl text-[#ef2b58]" />

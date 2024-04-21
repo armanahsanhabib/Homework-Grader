@@ -9,7 +9,7 @@ const Error404 = (props) => {
         showSidebar={props.showSidebar}
         setShowSidebar={props.setShowSidebar}
       />
-      <main className="flex h-[calc(100%-61px)] items-center justify-center overflow-auto">
+      <main className="flex h-[calc(100%-73px)] items-center justify-center overflow-auto">
         <div className="item flex flex-col gap-3 text-center text-gray-800">
           <h1 className="text-8xl font-bold">404</h1>
           <h2 className="text-2xl font-bold">Not Found</h2>

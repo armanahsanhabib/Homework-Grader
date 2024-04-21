@@ -91,14 +91,14 @@ const GradeSubmission = (props) => {
   };
 
   return (
-    <div className="overflow-hidden p-3 xl:w-[calc(100%-300px)]">
+    <div className="w-full overflow-hidden xl:w-[calc(100%-320px)]">
       <Header
         title="Grade Submission"
         showSidebar={props.showSidebar}
         setShowSidebar={props.setShowSidebar}
       />
-      <main className="grid h-[calc(100%-61px)] gap-5 overflow-auto sm:grid-cols-3">
-        <div className="left h-full p-3 sm:col-span-2">
+      <main className="grid h-[calc(100%-73px)] lg:grid-cols-3">
+        <div className="left m-6 h-max rounded-lg border bg-white p-6 lg:col-span-2">
           <form onSubmit={handleSubmit}>
             <h3 className="mb-3 text-lg font-bold text-[#6151fb]">
               Student information
@@ -187,8 +187,8 @@ const GradeSubmission = (props) => {
             </button>
           </form>
         </div>
-        <div className="right col-span-1 bg-white p-3 sm:border-l">
-          <h2 className="my-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
+        <div className="right col-span-1 m-6 h-max rounded-lg border bg-white p-6 sm:border-l lg:ms-0">
+          <h2 className="mb-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
             Grade Analysis
           </h2>
           {!showAnalysis ||
@@ -199,13 +199,15 @@ const GradeSubmission = (props) => {
           !formData.english ||
           !formData.history ||
           !formData.geography ? (
-            <div className="flex w-full justify-center xl:mt-8">
+            <div className="flex w-full justify-center xl:my-8">
               <div className="item flex h-max flex-col items-center gap-3 rounded-lg bg-[#f9e5ea] p-8">
                 <div className="icon">
                   <BiSolidErrorAlt className="text-5xl text-[#ef2b58]" />
                 </div>
                 <div className="text flex flex-col gap-2 text-center">
-                  <h3 className="font-bold xl:text-xl">No Data to Show</h3>
+                  <h3 className="font-bold xl:text-xl">
+                    No Grading Data to Show
+                  </h3>
                   <p className="text-sm text-gray-600 xl:text-base">
                     CGPA will show once calculated Grade!
                   </p>
