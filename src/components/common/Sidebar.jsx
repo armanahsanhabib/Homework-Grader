@@ -13,10 +13,10 @@ const Sidebar = (props) => {
     return (
       <li className="mx-5 overflow-hidden rounded-lg border shadow-lg">
         <a
-          className={`flex w-full items-center gap-2 px-4 py-3 text-white transition-all hover:border-orange-500 hover:bg-orange-500 hover:font-semibold hover:text-white ${
+          className={`flex w-full items-center gap-2 px-4 py-3 text-white transition-all hover:border-teal-800 hover:bg-teal-800 hover:font-semibold hover:text-white ${
             location.pathname === props.href
-              ? "border-orange-500 bg-orange-400 font-semibold"
-              : "bg-[#1e1d3d]"
+              ? "border-teal-800 bg-teal-800 font-semibold"
+              : "bg-teal-600"
           }`}
           href={props.href}
         >
@@ -29,10 +29,10 @@ const Sidebar = (props) => {
 
   return (
     <div
-      className={`w-[320px] flex-col justify-between bg-[#2b2a52] shadow-xl xl:flex ${props.showSidebar ? "fixed z-50 h-full shadow-2xl xl:static" : "hidden"}`}
+      className={`w-[320px] flex-col justify-between bg-[#28534e] shadow-xl xl:flex ${props.showSidebar ? "fixed z-50 h-full shadow-2xl xl:static" : "hidden"}`}
     >
       <div className="top flex flex-col gap-5">
-        <div className="logo flex flex-col items-center justify-center gap-2 bg-[#1e1d3d] py-8 text-xl text-white">
+        <div className="logo flex flex-col items-center justify-center gap-2 bg-teal-800 py-8 text-xl text-white">
           <GiNotebook className="text-4xl" />
           <div className="">
             <span className="font-[600]">Homework</span>{" "}

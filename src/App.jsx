@@ -28,7 +28,7 @@ const App = () => {
 
   return (
     <Router>
-      <div className="app flex h-screen bg-[#c0d2e6]">
+      <div className="app flex h-screen bg-gray-300">
         <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
         <Routes>
           <Route
