@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { BiSolidError } from "react-icons/bi";
 import { toast } from "react-toastify";
 
-const HomeworkResultSheet = (props) => {
+const HomeworkResultSheet = () => {
   const [resultSheet, setResultSheet] = useState(
     JSON.parse(localStorage.getItem("resultSheet")) || [],
   );
