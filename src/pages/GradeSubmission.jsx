@@ -3,7 +3,6 @@ import { useState } from "react";
 import { BiSolidErrorAlt } from "react-icons/bi";
 import { BsCalculator } from "react-icons/bs";
 import { toast } from "react-toastify";
-import Header from "../components/common/Header";
 import { calculateCGPA, calculateGrade } from "../utils/gradingFunctions";
 
 const GradeSubmission = (props) => {
@@ -91,14 +90,12 @@ const GradeSubmission = (props) => {
   };
 
   return (
-    <div className="w-full overflow-hidden xl:w-[calc(100%-320px)]">
-      <Header
-        title="Grade Submission"
-        showSidebar={props.showSidebar}
-        setShowSidebar={props.setShowSidebar}
-      />
-      <main className="grid h-[calc(100%-73px)] lg:grid-cols-3">
-        <div className="left m-6 h-max rounded-lg border bg-white p-6 lg:col-span-2">
+    <div className="h-screen w-full overflow-auto">
+      <main className="container mx-auto grid lg:grid-cols-3">
+        <h1 className="mt-5 border-b-4 border-slate-400 pb-2 text-xl font-bold lg:col-span-3">
+          Grade Submission
+        </h1>
+        <div className="left my-6 mr-6 h-max rounded-lg border bg-white p-6 lg:col-span-2">
           <form onSubmit={handleSubmit}>
             <h3 className="mb-3 text-lg font-bold text-[#6151fb]">
               Student information
@@ -187,7 +184,7 @@ const GradeSubmission = (props) => {
             </button>
           </form>
         </div>
-        <div className="right col-span-1 m-6 h-max rounded-lg border bg-white p-6 sm:border-l lg:ms-0">
+        <div className="right col-span-1 m-6 mr-0 h-max rounded-lg border bg-white p-6 sm:border-l lg:ms-0">
           <h2 className="mb-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
             Grade Analysis
           </h2>

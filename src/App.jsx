@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Sidebar from "./components/common/Sidebar";
+import Header from "./components/common/Header";
 import Error404 from "./pages/Error404";
 import GradeResultSheet from "./pages/GradeResultSheet";
 import GradeSubmission from "./pages/GradeSubmission";
@@ -28,8 +28,8 @@ const App = () => {
 
   return (
     <Router>
-      <div className="app flex h-screen bg-gray-300">
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <div className="app bg-gray-300">
+        <Header showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
         <Routes>
           <Route
             path="/"

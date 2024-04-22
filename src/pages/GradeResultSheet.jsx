@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { BiSolidError } from "react-icons/bi";
 import { toast } from "react-toastify";
-import Header from "../components/common/Header";
 
 const GradeResultSheet = (props) => {
   const [resultSheet, setResultSheet] = useState(
@@ -23,15 +22,13 @@ const GradeResultSheet = (props) => {
   };
 
   return (
-    <div className="w-full overflow-hidden xl:w-[calc(100%-320px)]">
-      <Header
-        title="Grade Submission Sheet"
-        showSidebar={props.showSidebar}
-        setShowSidebar={props.setShowSidebar}
-      />
+    <div className="h-screen w-full overflow-auto">
       {resultSheet.length > 0 ? (
-        <main className="h-[calc(100%-73px)] overflow-auto">
-          <div className="m-6 rounded-lg border bg-white p-6">
+        <main className="container mx-auto">
+          <h1 className="mt-5 border-b-4 border-slate-400 pb-2 text-xl font-bold">
+            Grade Submission Sheet
+          </h1>
+          <div className="my-6 rounded-lg border bg-white p-6">
             <h3 className="mb-5 text-lg font-bold text-[#6151fb]">
               Total {resultSheet.length} records found!
             </h3>
@@ -147,8 +144,11 @@ const GradeResultSheet = (props) => {
           </div>
         </main>
       ) : (
-        <main className="h-[calc(100%-73px)] gap-3 overflow-auto text-gray-800">
-          <div className="box m-6 flex items-center gap-3 rounded-lg border bg-white p-6">
+        <main className="container mx-auto h-[calc(100%-83px)] gap-3 overflow-auto text-gray-800">
+          <h1 className="mt-5 border-b-4 border-slate-400 pb-2 text-xl font-bold">
+            Grade Submission Sheet
+          </h1>
+          <div className="box my-6 flex items-center gap-3 rounded-lg border bg-white p-6">
             <BiSolidError className="text-5xl text-orange-400" />
             <div className="text">
               <h1 className="text-xl font-bold">

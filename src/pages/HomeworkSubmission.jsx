@@ -4,7 +4,6 @@ import { BiSolidErrorAlt } from "react-icons/bi";
 import { IoCloudUpload } from "react-icons/io5";
 import { MdDelete, MdOutlineDocumentScanner } from "react-icons/md";
 import { toast } from "react-toastify";
-import Header from "../components/common/Header";
 import { calculateMarks } from "../utils/homewrokFunctions";
 
 const HomeworkSubmission = (props) => {
@@ -95,14 +94,12 @@ const HomeworkSubmission = (props) => {
   };
 
   return (
-    <div className="w-full overflow-hidden xl:w-[calc(100%-320px)]">
-      <Header
-        title="Homework Submission"
-        showSidebar={props.showSidebar}
-        setShowSidebar={props.setShowSidebar}
-      />
-      <main className="grid h-[calc(100%-73px)] overflow-auto lg:grid-cols-3">
-        <div className="left m-6 h-max rounded-lg border bg-white p-6 sm:overflow-auto lg:col-span-2">
+    <div className="h-screen w-full overflow-auto">
+      <main className="container mx-auto grid lg:grid-cols-3">
+        <h1 className="mt-5 border-b-4 border-slate-400 pb-2 text-xl font-bold lg:col-span-3">
+          Homework Submission
+        </h1>
+        <div className="left my-6 mr-6 h-max rounded-lg border bg-white p-6 sm:overflow-auto lg:col-span-2">
           <form onSubmit={handleSubmit}>
             <h3 className="mb-3 text-lg font-bold text-[#6151fb]">
               Student information
@@ -212,7 +209,7 @@ const HomeworkSubmission = (props) => {
             </button>
           </form>
         </div>
-        <div className="right col-span-1 m-6 h-max rounded-lg border bg-white p-6 sm:border-l lg:ms-0">
+        <div className="right col-span-1 m-6 mr-0 h-max rounded-lg border bg-white p-6 sm:border-l lg:ms-0">
           <h2 className="mb-3 border-b pb-2 text-lg font-bold text-[#6151fb]">
             Homework Analysis Result
           </h2>
